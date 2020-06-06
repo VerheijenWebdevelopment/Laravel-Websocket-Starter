@@ -7,73 +7,108 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+## Laravel Websocket Starter
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This is a skeleton Laravel 7 application with some modifications and the [beyondcode/laravel-websockets](#) package pre-installed to get you started quickly on your next Laravel application.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Since I usually develop on Windows using Homestead this scaffold and it's instructions will reflect that. Keep that in mind if using this in a different environment.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+The following changes were made, in order, to a default Laravel installation:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [x] Created designated `app/Models` directory
+- [x] Moved `app/User.php` model to `app/Models/User.php`
+- [x] Updated `config/auth.php` to load the user model from it's new location
+- [x] Updated `config/app.php` to load the `BroadcastingServiceProvider`
+- [x] Updated `webpack.mix.js` so we have asset compiling & live reloading when we run `npm run watch`
+- [x] Moved inline styling to `resources/sass/app.scss`
+- [x] Created default layout called `resources/views/layouts/app.blade.php`
+- [x] Added csrf token meta tag to `layout.blade.php`
+- [x] Created landing page view called `resources/views/pages/landing.blade.php`
+- [x] Moved contents of `welcome.blade.php` to `landing.blade.php` and deleted `welcome.blade.php`
+- [x] Created a `App\Http\Controllers\LandingController.php` controller
+- [x] Updated `routes/web.php` route file so landing page route points to the `LandingController`
+- [x] Installed the [beyondcode/laravel-websockets](#) package following the [official instructions](https://beyondco.de/docs/laravel-websockets/getting-started/installation)
+- [x] Installed the [pusher/pusher-php-server](#) package 
+- [x] Updated `config/broadcasting.php` so pusher driver points to our websocket server env variables
+- [x] Installed `pusher-js` & `laravel-echo` & `vue` node modules
+- [x] Updated `resources\js\bootstrap.js` to load pusher & laravel echo
+- [x] Updated `resources\js\app.js` to automatically load vue components and setup a vue application
+- [x] Created a `resources\js\components\EchoTest.vue` vue component & added it in the landing page view
+- [x] Created a `app\Events\TestEvent.php` TestEvent class we can broadcast
+- [x] 
+- [x] 
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+1. Clone the repository using the following command:
+```
+git clone https://github.com/blabla.git MyApplication
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. Install node modules
+```
+npm install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+3. Run npm watch to compile assets & launch the application:
+```
+npm run watch
+```
 
-## Contributing
+4. (Create and) update your `.env` environment file, set the following values. Empty values you should update yourself.
+```
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+BROADCAST_DRIVER=pusher
 
-## Code of Conduct
+PUSHER_APP_ID=starter
+PUSHER_APP_KEY=aaaaaaaaaaaaaaaaaaaa
+PUSHER_APP_SECRET=aaaaaaaaaaaaaaaaaaaa
+PUSHER_APP_CLUSTER=eu
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 
-## Security Vulnerabilities
+WEBSOCKET_HOST_WS=laravel-websocket-starter.test
+WEBSOCKET_PORT_WS=6001
+WEBSOCKET_PORT_WSS=6001
+WEBSOCKET_ENCRYPTED=false
+WEBSOCKET_USE_TLS=false
+WEBSOCKET_SCHEME=http
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+WEBSOCKET_BROADCAST_HOST=192.168.10.10
+WEBSOCKET_BROADCAST_PORT=6001
 
-## License
+MIX_WEBSOCKET_PORT="${WEBSOCKET_PORT}"
+MIX_WEBSOCKET_ENCRYPTED="${WEBSOCKET_ENCRYPTED}"
+MIX_WEBSOCKET_PORT_WS="${WEBSOCKET_PORT_WS}"
+MIX_WEBSOCKET_PORT_WSS="${WEBSOCKET_PORT_WSS}"
+MIX_WEBSOCKET_USE_TLS="${WEBSOCKET_USE_TLS}"
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5. Run migrations (not actually required but why not)
+```
+php artisan migrate
+```
+
+6. Update homestead `/etc/nginx/sites-available/laravel-websocket-starter.test` config file and add:
+```
+location /ws {
+    proxy_pass             http://192.168.10.10:6001;
+    proxy_set_header Host  $host;
+    proxy_read_timeout     60;
+    proxy_connect_timeout  60;
+    proxy_redirect         off;
+
+    # Allow the use of websockets
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+}
+```
