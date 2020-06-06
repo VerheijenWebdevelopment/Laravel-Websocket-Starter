@@ -13,6 +13,11 @@ This is a skeleton Laravel 7 application with some modifications and pre-install
 
 Since I usually develop on Windows using Homestead this scaffold and it's instructions will reflect that. Keep that in mind if using this in a different environment.
 
+#### Caveat
+
+> I created this to debug the laravel-websockets package as I couldn't get it to work for a while using Homestead on windows. When using the latest pusher-js version (6.0.3) it will
+> force laravel-echo to use the wss:// protocol instead of ws:// which gave me a headache for a while. The solution for now is to use the 5.1.1 version of the pusher-js package.
+
 ## Features & modifications
 
 - [x] Dedicated models directory under `app\Models`
