@@ -9,45 +9,35 @@
 
 ## Laravel Websocket Starter
 
-This is a skeleton Laravel 7 application with some modifications and the [beyondcode/laravel-websockets](#) package pre-installed to get you started quickly on your next Laravel application.
+This is a skeleton Laravel 7 application with some modifications and pre-installed packages to get you started quickly on your next Laravel application that has to use websockets.
 
 Since I usually develop on Windows using Homestead this scaffold and it's instructions will reflect that. Keep that in mind if using this in a different environment.
 
-## Features
+## Features & modifications
 
-The following changes were made, in order, to a default Laravel installation:
-
-- [x] Created designated `app/Models` directory
+- [x] Dedicated models directory under `app\Models`
 - [x] Moved `app/User.php` model to `app/Models/User.php`
-- [x] Updated `config/auth.php` to load the user model from it's new location
-- [x] Updated `config/app.php` to load the `BroadcastingServiceProvider`
-- [x] Updated `webpack.mix.js` so we have asset compiling & live reloading when we run `npm run watch`
-- [x] Moved inline styling to `resources/sass/app.scss`
-- [x] Created default layout called `resources/views/layouts/app.blade.php`
-- [x] Added csrf token meta tag to `layout.blade.php`
-- [x] Created landing page view called `resources/views/pages/landing.blade.php`
-- [x] Moved contents of `welcome.blade.php` to `landing.blade.php` and deleted `welcome.blade.php`
-- [x] Created a `App\Http\Controllers\LandingController.php` controller
-- [x] Updated `routes/web.php` route file so landing page route points to the `LandingController`
-- [x] Installed the [beyondcode/laravel-websockets](#) package following the [official instructions](https://beyondco.de/docs/laravel-websockets/getting-started/installation)
-- [x] Installed the [pusher/pusher-php-server](#) package 
-- [x] Updated `config/broadcasting.php` so pusher driver points to our websocket server env variables
-- [x] Installed `pusher-js` & `laravel-echo` & `vue` node modules
-- [x] Updated `resources\js\bootstrap.js` to load pusher & laravel echo
-- [x] Updated `resources\js\app.js` to automatically load vue components and setup a vue application
-- [x] Created a `resources\js\components\EchoTest.vue` vue component & added it in the landing page view
-- [x] Created a `app\Events\TestEvent.php` TestEvent class we can broadcast
-- [x] 
-- [x] 
+- [x] Webpack.mix.js is configured for live-reloading
+- [x] Basic authentication
+- [x] Landing page with basic chatbox
+- [x] Pre-installed [beyondcode/laravel-websockets](https://github.com/beyondcode/laravel-websockets)
+- [x] Pre-installed [pusher/pusher-php-server]()
+- [x] Pre-installed [laravel/horizon](https://github.com/laravel/horizon)
+- [x] Pre-installed `vue`, `axios`, `vue-axios`, `pusher-js`,  `laravel-echo`
 
 ## Installation
 
 1. Clone the repository using the following command:
 ```
-git clone https://github.com/blabla.git MyApplication
+git clone git@github.com:VerheijenWebdevelopment/Laravel-Websocket-Starter.git MyApplication
 ```
 
-2. Install node modules
+2. Install dependencies
+```
+composer install
+```
+
+2. Install frontend dependencies
 ```
 npm install
 ```
@@ -112,3 +102,12 @@ location /ws {
     proxy_cache_bypass $http_upgrade;
 }
 ```
+
+7. Start websocket server by ssh-ing into the homestead vm and executing:
+```
+php artisan websockets:serve --host=192.168.10.10
+```
+
+8. Should be done.
+
+#### TODO: test procedure & update instructions

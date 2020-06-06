@@ -29,11 +29,12 @@ if (useTLSOverride) {
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: window.location.hostname,
+    // wsHost: window.location.hostname,
+    wsHost: 'laravel-websocket-starter.test',
     wsPort: process.env.MIX_WEBSOCKET_PORT_WS,
     wssPort: process.env.MIX_WEBSOCKET_PORT_WSS,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     encrypted: false,
     enabledTransports: ["ws", "wss"],
-    disableStats: false,
+    disableStats: true,
 });

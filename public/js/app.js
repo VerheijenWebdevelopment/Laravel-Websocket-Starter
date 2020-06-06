@@ -1914,22 +1914,130 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [],
+  props: ["user", "apiEndpoint"],
   data: function data() {
     return {
-      tag: "[echo-test]"
+      tag: "[echo-test]",
+      connected: false,
+      users: [],
+      messages: [],
+      form: {
+        message: ""
+      }
     };
   },
+  computed: {
+    submitDisabled: function submitDisabled() {
+      return this.form.messages === "";
+    }
+  },
   methods: {
+    initialize: function initialize() {
+      console.log(this.tag + " initializing");
+      console.log(this.tag + " api endpoint: ", this.apiEndpoint);
+      this.startListening();
+    },
     startListening: function startListening() {
-      Echo.channel('App').listen('TestEvent', function (e) {
-        console.log(e);
+      Echo.join('Test').here(this.onConnected).joining(this.onJoining).leaving(this.onLeaving).listen('TestEvent', this.onTestEvent);
+    },
+    onConnected: function onConnected(users) {
+      console.log(this.tag + " connected to channel", users);
+      this.connected = true;
+      this.users = users;
+    },
+    onJoining: function onJoining(user) {
+      console.log(this.tag + " user joining channel", user);
+      this.users.push(user);
+    },
+    onLeaving: function onLeaving(user) {
+      console.log(this.tag + " user left channel", user);
+
+      for (var i = 0; i < this.users.length; i++) {
+        if (this.users[i].id === user.id) {
+          this.users.splice(i, 1);
+          break;
+        }
+      }
+    },
+    onTestEvent: function onTestEvent(e) {
+      console.log(this.tag + " received 'TestEvent'", e);
+      this.messages.push({
+        user: e.user,
+        message: e.message
       });
+    },
+    onClickSubmit: function onClickSubmit() {
+      console.log(this.tag + " clicked submit button");
+      var message = this.form.message;
+      this.form.message = "";
+      var payload = new FormData();
+      payload.append("message", message);
+      this.axios.post(this.apiEndpoint, payload).then(function (response) {
+        console.log(this.tag + " api request succeeded");
+
+        if (response.data.status === "success") {
+          console.log(this.tag + " succesfully sent message");
+          this.messages.push({
+            user: this.user,
+            message: message
+          });
+        } else {
+          console.log(this.tag + " failed to send message");
+        }
+      }.bind(this))["catch"](function (error) {
+        console.log(this.tag + " api request failed");
+      }.bind(this));
     }
   },
   mounted: function mounted() {
-    this.startListening();
+    this.initialize();
   }
 });
 
@@ -3913,7 +4021,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "#echo-test {\n  width: 1000px;\n  display: flex;\n  flex-direction: row;\n}\n#echo-test #echo-test__left {\n  flex: 1;\n  margin: 0 30px 0 0;\n}\n#echo-test #echo-test__left #echo-test__chat {\n  margin: 0 0 30px 0;\n}\n#echo-test #echo-test__left #echo-test__chat #echo-test__messages {\n  border-radius: 3px;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n}\n#echo-test #echo-test__left #echo-test__chat #echo-test__messages .echo-test__message {\n  display: flex;\n  padding: 10px 15px;\n  flex-direction: row;\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n}\n#echo-test #echo-test__left #echo-test__chat #echo-test__messages .echo-test__message:last-child {\n  border-bottom: 0;\n}\n#echo-test #echo-test__left #echo-test__chat #echo-test__messages .echo-test__message .echo-test__message-user {\n  font-weight: 600;\n  margin: 0 10px 0 0;\n}\n#echo-test #echo-test__left #echo-test__chat #echo-test__no-messages {\n  border-radius: 3px;\n  padding: 10px 15px;\n  box-sizing: border-box;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n}\n#echo-test #echo-test__left #echo-test__form {\n  display: flex;\n  flex-direction: row;\n}\n#echo-test #echo-test__left #echo-test__form #echo-test__form-input {\n  flex: 1;\n}\n#echo-test #echo-test__left #echo-test__form #echo-test__form-input input[type=text] {\n  width: 100%;\n  height: 35px;\n  padding: 0 10px;\n  line-height: 35px;\n  box-sizing: border-box;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n}\n#echo-test #echo-test__left #echo-test__form #echo-test__form-submit {\n  margin: 0 0 0 15px;\n}\n#echo-test #echo-test__left #echo-test__form #echo-test__form-submit button {\n  border: 0;\n  height: 35px;\n  padding: 0 15px;\n  border-radius: 3px;\n  transition: all 0.3s;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n}\n#echo-test #echo-test__left #echo-test__form #echo-test__form-submit button:hover {\n  cursor: pointer;\n  background-color: #fafafa;\n}\n#echo-test #echo-test__right {\n  flex: 0 0 300px;\n}\n#echo-test #echo-test__right #echo-test__users {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  border-radius: 3px;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n}\n#echo-test #echo-test__right #echo-test__users .echo-test__user {\n  padding: 10px 15px;\n  box-sizing: border-box;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n}\n#echo-test #echo-test__right #echo-test__users .echo-test__user:last-child {\n  border-bottom: 0;\n}", ""]);
 
 // exports
 
@@ -30267,6 +30375,19 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-axios/dist/vue-axios.min.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-axios/dist/vue-axios.min.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(o){return typeof o}:function(o){return o&&"function"==typeof Symbol&&o.constructor===Symbol&&o!==Symbol.prototype?"symbol":typeof o};!function(){function o(e,t){if(!o.installed){if(o.installed=!0,!t)return void console.error("You have to install axios");e.axios=t,Object.defineProperties(e.prototype,{axios:{get:function(){return t}},$http:{get:function(){return t}}})}}"object"==( false?undefined:_typeof(exports))?module.exports=o: true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function(){return o}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined}();
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EchoTest.vue?vue&type=template&id=028ecb7c&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EchoTest.vue?vue&type=template&id=028ecb7c& ***!
@@ -30283,7 +30404,119 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "echo-test" } }, [
-    _vm._v("\n    Echo test\n")
+    _c("div", { attrs: { id: "echo-test__left" } }, [
+      _c("h2", [_vm._v("Chatbox")]),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "echo-test__chat" } }, [
+        _vm.messages.length > 0
+          ? _c(
+              "div",
+              { attrs: { id: "echo-test__messages" } },
+              _vm._l(_vm.messages, function(message, mi) {
+                return _c(
+                  "div",
+                  { key: mi, staticClass: "echo-test__message" },
+                  [
+                    _c("div", { staticClass: "echo-test__message-user" }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(message.user.name) +
+                          "\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "echo-test__message-text" }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(message.message) +
+                          "\n                    "
+                      )
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.messages.length === 0
+          ? _c("div", { attrs: { id: "echo-test__no-messages" } }, [
+              _vm._v("\n                No messages received yet\n            ")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "echo-test__form" } }, [
+        _c("div", { attrs: { id: "echo-test__form-input" } }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.message,
+                expression: "form.message"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.form.message },
+            on: {
+              keydown: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                $event.preventDefault()
+                return _vm.onClickSubmit($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "message", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "echo-test__form-submit" } }, [
+          _c(
+            "button",
+            {
+              attrs: { disabled: _vm.submitDisabled },
+              on: { click: _vm.onClickSubmit }
+            },
+            [_vm._v("\n                    Send message\n                ")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "echo-test__right" } }, [
+      _c("h2", [_vm._v("Online users")]),
+      _vm._v(" "),
+      _vm.users.length > 0
+        ? _c(
+            "ul",
+            { attrs: { id: "echo-test__users" } },
+            _vm._l(_vm.users, function(user, ui) {
+              return _c("li", { key: ui, staticClass: "echo-test__user" }, [
+                _vm._v(
+                  "\n                " + _vm._s(user.name) + "\n            "
+                )
+              ])
+            }),
+            0
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.users.length === 0
+        ? _c("div", { attrs: { id: "echo-test__no-users" } }, [
+            _vm._v("\n            No online users\n        ")
+          ])
+        : _vm._e()
+    ])
   ])
 }
 var staticRenderFns = []
@@ -42492,13 +42725,20 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_0__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Load Vue
 
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // Automatically load all vue components
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // Load Vue-Axios
+
+
+Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_0___default.a, window.axios); // Automatically load all vue components
 
 var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
 
@@ -42550,13 +42790,14 @@ if (useTLSOverride) {
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "aaaaaaaaaaaaaaaaaaaa",
-  wsHost: window.location.hostname,
+  // wsHost: window.location.hostname,
+  wsHost: 'laravel-websocket-starter.test',
   wsPort: "6001",
   wssPort: "6001",
   cluster: "mt1",
   encrypted: false,
   enabledTransports: ["ws", "wss"],
-  disableStats: false
+  disableStats: true
 });
 
 /***/ }),

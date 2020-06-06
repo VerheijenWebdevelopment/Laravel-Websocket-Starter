@@ -8,45 +8,108 @@ body {
   margin: 0;
 }
 
-.full-height {
-  height: 100vh;
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.flex-center {
-  align-items: center;
+#app #header {
   display: flex;
+  flex: 0 0 300px;
+  align-items: center;
+  flex-direction: column;
   justify-content: center;
 }
 
-.position-ref {
-  position: relative;
+#app #header #nav .nav-link {
+  margin: 0 10px;
+  color: #000000;
+  text-decoration: none;
 }
 
-.top-right {
-  position: absolute;
-  right: 10px;
-  top: 18px;
+#app #header #nav .nav-link:hover {
+  text-decoration: underline;
 }
 
-.content {
-  text-align: center;
+#app #content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .title {
-  font-size: 84px;
+  font-size: 64px;
+  font-weight: 300;
+  margin: 0 0 20px 0;
 }
 
-.links > a {
-  color: #636b6f;
-  padding: 0 25px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1rem;
-  text-decoration: none;
-  text-transform: uppercase;
+#login-form input[type=text],
+#login-form input[type=password] {
+  width: 100%;
+  height: 35px;
+  padding: 0 10px;
+  line-height: 35px;
+  margin: 0 0 15px 0;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.m-b-md {
-  margin-bottom: 30px;
+#login-form #login-form__submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#login-form #login-form__submit button {
+  border: 0;
+  height: 35px;
+  padding: 0 15px;
+  border-radius: 3px;
+  transition: all 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#login-form #login-form__submit button:hover {
+  cursor: pointer;
+  background-color: #fafafa;
+}
+
+#register-form {
+  width: 400px;
+  margin: 0 auto;
+}
+
+#register-form input[type=text],
+#register-form input[type=password] {
+  width: 100%;
+  height: 35px;
+  padding: 0 10px;
+  line-height: 35px;
+  margin: 0 0 15px 0;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#register-form #register-form__submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+#register-form #register-form__submit button {
+  border: 0;
+  height: 35px;
+  padding: 0 15px;
+  border-radius: 3px;
+  transition: all 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#register-form #register-form__submit button:hover {
+  cursor: pointer;
+  background-color: #fafafa;
 }
 

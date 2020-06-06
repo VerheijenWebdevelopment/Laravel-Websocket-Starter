@@ -21,10 +21,20 @@
 
         <!-- App -->
         <div id="app">
-            <div class="flex-center position-ref full-height">
-                <div class="content">
-                    @yield("content")
+            <div id="header">
+                <h1 class="title">Laravel Websockets Starter</h1>
+                <div id="nav">
+                    @if (!auth()->check())
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    @else
+                        <a class="nav-link" href="{{ route('landing') }}">Home</a>
+                        <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                    @endif
                 </div>
+            </div>
+            <div id="content">
+                @yield("content")
             </div>
         </div>
 

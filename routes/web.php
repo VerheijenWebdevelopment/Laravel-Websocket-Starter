@@ -14,3 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/", "LandingController@getLanding")->name("landing");
+
+Route::get("login", "Auth\LoginController@getLogin")->name("login");
+Route::post("login", "Auth\LoginController@postLogin")->name("login.post");
+
+Route::get("register", "Auth\RegisterController@getRegister")->name("register");
+Route::post("register", "Auth\RegisterController@postRegister")->name("register.post");
+
+Route::get("logout", "Auth\LogoutController@getLogout")->name("logout");
+
+Route::post("send-test-message", "LandingController@postSendTestMessage")->name("send-test-message.post");
